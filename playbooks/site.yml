@@ -22,3 +22,17 @@
         name: mysql
         enabled: yes
         state: started
+- hosts: all
+  become: yes
+  tasks:
+    - name: Ensure group "infra" exists
+      group:
+        name: infra
+        state: present
+        gid: 12000
+    - name: Create admin user
+      user:
+        name: usr_test
+        uid: 14000
+        groups: sudo, infra
+        shell: /bin/bash 
